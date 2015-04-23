@@ -22,32 +22,56 @@
                 insert-post!     (fn [& _] 0)]
     (is (= (create-post! "user1" true) nil))))
 
-;; if post exists and there is audio, can add to table
+;; if post exists and there is audio, can update post
 (deftest can-add-audio
-  (with-redefs [post-exists?       (fn [& _] true)
-                store-audio!       (fn [& _] "filename")
-                update-post-audio! (fn [& _] 1)]
+  (with-redefs [post-exists?               (fn [& _] true)
+                store-audio!               (fn [& _] "filename")
+                post-has-audio?            (fn [& _] false)
+                audio-hash-already-exists? (fn [& _] false)
+                update-post-audio!         (fn [& _] 1)]
     (is (= (add-file-to-post! "someaudio" 2) 1))))
 
-;; if post exists and there is no audio, cannot add to table
+;; if post exists and there is no audio, cannot update post
 (deftest cannot-add-audio-because-no-audio-supplied
-  (with-redefs [post-exists?       (fn [& _] true)
-                store-audio!       (fn [& _] "filename")
-                update-post-audio! (fn [& _] 1)]
+  (with-redefs [post-exists?               (fn [& _] true)
+                store-audio!               (fn [& _] "filename")
+                post-has-audio?            (fn [& _] false)
+                audio-hash-already-exists? (fn [& _] false)
+                update-post-audio!         (fn [& _] 1)]
     (is (= (add-file-to-post! nil 2) nil))))
 
-;; if post does not exists and there is audio, cannot add to table
+;; if post does not exists and there is audio, cannot update post
 (deftest cannot-add-audio-because-post-DNE
-  (with-redefs [post-exists?       (fn [& _] false)
-                store-audio!       (fn [& _] "filename")
-                update-post-audio! (fn [& _] 1)]
+  (with-redefs [post-exists?               (fn [& _] false)
+                store-audio!               (fn [& _] "filename")
+                post-has-audio?            (fn [& _] false)
+                audio-hash-already-exists? (fn [& _] false)
+                update-post-audio!         (fn [& _] 1)]
     (is (= (add-file-to-post! "someaudio" 2) nil))))
 
-;; if post does not exists and there is no audio, cannot add to table
-(deftest cannot-add-audio-because-post-DNE-and-no-audio-supplied
-  (with-redefs [post-exists?       (fn [& _] false)
-                store-audio!       (fn [& _] "filename")
-                update-post-audio! (fn [& _] 1)]
+;; if post already has audio, cannot update post
+(deftest cannot-add-audio-because-post-already-has-audio
+  (with-redefs [post-exists?               (fn [& _] true)
+                store-audio!               (fn [& _] "filename")
+                post-has-audio?            (fn [& _] true)
+                audio-hash-already-exists? (fn [& _] false)
+                update-post-audio!         (fn [& _] 1)]
     (is (= (add-file-to-post! "someaudio" 2) nil))))
 
-;; QUESTION/TODO: how do we test adding a filename that already exists?
+;; if query fails, cannot update post
+(deftest cannot-add-audio-because-query-failed
+  (with-redefs [post-exists?               (fn [& _] true)
+                store-audio!               (fn [& _] "filename")
+                post-has-audio?            (fn [& _] false)
+                audio-hash-already-exists? (fn [& _] false)
+                update-post-audio!         (fn [& _] 0)]
+    (is (= (add-file-to-post! "someaudio" 2) nil))))
+
+;; if hash from store audio is already used, cannot update post
+(deftest cannot-add-audio-because-hash-already-exists
+  (with-redefs [post-exists?               (fn [& _] true)
+                store-audio!               (fn [& _] "filename")
+                post-has-audio?            (fn [& _] false)
+                audio-hash-already-exists? (fn [& _] true)
+                update-post-audio!         (fn [& _] 0)]
+    (is (= (add-file-to-post! "someaudio" 2) nil))))
