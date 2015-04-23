@@ -65,7 +65,7 @@
    updates table so post row has filekey in entry
    @param   audio  [?]    the audio file
    @param   postid [integer] post id the audio is for
-   @returns        [integer] 1 or 0 success or failure"
+   @returns        [boolean]  success or failure"
    ; QUESTION: what should this return?
    ; QUESTION: what is audio's type
    ; what oes checking if audio is null look like? should we check here?
@@ -76,4 +76,4 @@
             (not (post-has-audio? postid))
             (not (audio-hash-already-exists? audio-hash))
             (= (update-post-audio! audio-hash postid) 1))
-       1 nil)))
+       true false)))
