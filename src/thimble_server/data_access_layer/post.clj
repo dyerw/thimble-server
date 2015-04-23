@@ -71,9 +71,9 @@
    ; what oes checking if audio is null look like? should we check here?
    [audio postid]
    (let [audio-hash (store-audio! audio)]
-     (if (and (post-exists? postid)
+     (and (post-exists? postid)
             (not (empty? audio))
             (not (post-has-audio? postid))
             (not (audio-hash-already-exists? audio-hash))
             (= (update-post-audio! audio-hash postid) 1))
-       true false)))
+       ))
