@@ -6,12 +6,15 @@
 (defquery insert-user! "thimble_server/data_access_layer/sql/insert/insert_user.sql")
 (defquery select-user "thimble_server/data_access_layer/sql/select/select_user.sql")
 
-(defn create-new-user!
-  "Creates a new user and adds it to the database."
-  [username password]
-  (insert-user! db-spec username password))
-
-(defn get-password-hash
-  "Retrieves password hash for a username."
+(defn get-user
+  "Retrieves user info for a username.
+   Returns a map with :username :password :about"
   [username]
-  (:password (select-user db-spec username)))
+  (select-user db-spec username))
+
+(defn create-user!
+  "Creates a new user and adds it to the database.
+   Returns true if the operation was successful and false otherwise."
+  [username password]
+  (and (empty? (get-user username))
+       (= (insert-user! db-spec username password) 1)))

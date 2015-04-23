@@ -5,14 +5,17 @@
             [thimble-server.data-access-layer.user :as user-data]))
 
 (defroutes main-routes
-  (POST "/api/user" {username :username
-                     password :password}
-                     (user-data/create-new-user! username password))
+  (POST "/api/user" [username password]
+                     (if (user-data/create-user! username password)
+                         ;; Return 200 if successful 400 if error
+                         {:status 200}
+                         {:status 400}))
   (GET "/api/user/:username" [username]
-                   (user-data/get-password-hash username)))
+                   (user-data/get-user username)))
 
 (def app (->  main-routes
-              ring-json/wrap-json-params))
+              ring-json/wrap-json-params
+              ring-json/wrap-json-response))
 
 (defn -main []
   (jetty/run-jetty app {:port 3000}))
