@@ -12,9 +12,14 @@
   [username]
   (select-user db-spec username))
 
+(defn user-exists?
+  "Returns true if user already exists in database."
+  [username]
+  (empty? (get-user username)))
+
 (defn create-user!
   "Creates a new user and adds it to the database.
    Returns true if the operation was successful and false otherwise."
   [username password]
-  (and (empty? (get-user username))
+  (and (user-exists? username)
        (= (insert-user! db-spec username password) 1)))
