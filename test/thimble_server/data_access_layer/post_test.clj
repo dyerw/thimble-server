@@ -3,6 +3,8 @@
             [thimble-server.data-access-layer.post :refer :all]
             [thimble-server.data-access-layer.user :refer [user-exists?]]))
 
+;;; Create Posts
+
 ;; If the user exists and the query works the new post id is returned
 (deftest can-create-post
   (with-redefs [get-next-postid  (fn [& _] 666)
@@ -21,6 +23,8 @@
                 user-exists?     (fn [& _] true)
                 insert-post!     (fn [& _] 0)]
     (is (= (create-post! "user1" true) nil))))
+
+;;; Update Posts
 
 ;; if post exists and there is audio, can update post
 (deftest can-add-audio
@@ -75,3 +79,15 @@
                 audio-hash-already-exists? (fn [& _] true)
                 update-post-audio!         (fn [& _] 0)]
     (is (not (add-file-to-post! "someaudio" 2)))))
+
+;;; Get Posts
+
+(def mock-posts [{:id 1 :file "a" :poster "user1" :original 1}
+                 {:id 2 :file "b" :poster "user1" :original 0}
+                 {:id 3 :file "c" :poster "user1" :original 0}
+                 {:id 4 :file "d" :poster "user1" :original 1}
+                 {:id 5 :file "e" :poster "user1" :original 1}])
+
+(deftest test-retrieving-original-posts
+  (with-redefs [select-posts-by-username (fn [& _] mock-posts)]
+    (is (= (get-original-posts-by-username "user1") [1 4 5]))))

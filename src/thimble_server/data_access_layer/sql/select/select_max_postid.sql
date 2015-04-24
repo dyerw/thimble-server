@@ -1,1 +1,1 @@
-SELECT max(id) FROM posts;
+SELECT max(id) AS max FROM posts;

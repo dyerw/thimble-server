@@ -10,16 +10,16 @@
   "Retrieves user info for a username.
    Returns a map with :username :password :about"
   [username]
-  (select-user db-spec username))
+  (first (select-user db-spec username)))
 
 (defn user-exists?
   "Returns true if user already exists in database."
   [username]
-  (empty? (get-user username)))
+  (not (nil? (get-user username))))
 
 (defn create-user!
   "Creates a new user and adds it to the database.
    Returns true if the operation was successful and false otherwise."
   [username password]
-  (and (user-exists? username)
+  (and (not (user-exists? username))
        (= (insert-user! db-spec username password) 1)))
