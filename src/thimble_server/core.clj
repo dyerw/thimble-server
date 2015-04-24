@@ -2,20 +2,13 @@
   (:use     [compojure.core])
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.json :as ring-json]
+            [thimble-server.route-handlers.user :as user]
             [ring.util.response :refer [response]]
-            [thimble-server.data-access-layer.user :as user-data]
             [thimble-server.data-access-layer.post :as post-data]))
 
 (defroutes main-routes
-  (POST "/api/user" [username password]
-                     (if (user-data/create-user! username password)
-                         ;; Return 200 if successful 400 if error
-                         {:status 200} {:status 400}))
-  (GET "/api/user/:username" [username]
-                   (let [user (user-data/get-user username)]
-                     (if (nil? user) {:status 404} (response user))))
-
-  (GET "/hi" [] {:hi 1})
+  (POST "/api/user" [username password] (user/handle-create-user username password))
+  (GET "/api/user/:username" [username] (user/handle-get-user-info username))
 
   (POST "/api/post" [username replyto] (let [new-id (post-data/create-post! username
                                                                             (nil? replyto))]
