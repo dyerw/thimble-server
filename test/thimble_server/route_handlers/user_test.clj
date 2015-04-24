@@ -1,5 +1,6 @@
 (ns thimble-server.route-handlers.user-test
   (:require [clojure.test :refer :all]
+            [thimble-server.core-test :refer [blank-response]]
             [thimble-server.route-handlers.user :refer :all]
             [thimble-server.data-access-layer.user :as user-data]))
 
@@ -15,9 +16,8 @@
 
 
 ;; Tests getting users that do and do not exist
-(def expected-response {:status  200
-                        :headers {}
-                        :body    {:username "user" :password "pass"}})
+(def expected-response
+  (merge blank-response {:body {:username "user" :password "pass"}}))
 
 (deftest get-existing-user
   (with-redefs [user-data/get-user (fn [& _] {:username "user"
