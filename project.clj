@@ -14,6 +14,8 @@
                  [org.clojure/java.jdbc "0.3.6"]
                  [org.xerial/sqlite-jdbc "3.8.7"]]
 
+  :plugins [[lein-cloverage "1.0.2"]]
+
   :main ^:skip-aot thimble-server.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}})
