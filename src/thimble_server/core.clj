@@ -1,9 +1,11 @@
 (ns thimble-server.core
-  (:use     [compojure.core])
             ;; Ring namespaces
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.json :as ring-json]
             [ring.util.response :refer [response]]
+
+            ;; Compojure Routing Lib
+            [compojure.core :refer [defroutes POST GET]]
 
             ;; Auth namespaces
             [buddy.auth :refer [authenticated?]]

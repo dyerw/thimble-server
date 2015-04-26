@@ -18,7 +18,9 @@
                  [buddy/buddy-auth "0.5.0"]
                  [buddy/buddy-hashers "0.4.2"]]
 
-  :plugins [[lein-cloverage "1.0.2"]]
+            ;; Code Quality tools
+  :plugins [[lein-cloverage "1.0.2"]
+            [jonase/eastwood "0.2.1"]]
 
   :main ^:skip-aot thimble-server.core
   :target-path "target/%s"

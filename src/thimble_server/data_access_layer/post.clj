@@ -1,7 +1,6 @@
 (ns thimble-server.data-access-layer.post
   (:require [thimble-server.data-access-layer.config :refer [db-spec sql-dir]]
             [thimble-server.data-access-layer.user :refer :all]
-            [thimble-server.data-access-layer.file_storage.store]
             [yesql.core :refer [defquery]]))
 
 ;; Create user functions from SQL queries
@@ -43,19 +42,19 @@
   "Returns true if post already exists in database.
   @param postid [integer] id of the post in question"
   [postid]
-  (empty? (get-post-by-id db-spec postid)))
+  (empty? (get-post-by-id postid)))
 
 (defn post-has-audio?
   "Returns false if file column of selected row is nil.
   @param postid [integer] id of the post in question"
   [postid]
-  (not (= (:file (get-post-by-id db-spec postid)) nil)))
+  (not (= (:file (get-post-by-id postid)) nil)))
 
 (defn audio-hash-already-exists?
   "returns false if there is no post with supplied audio hash
   @param audio-hash [string] audio hash corresponding to audio in storage"
   [audio-hash]
-  (empty? (get-post-by-audio-hash db-spec audio-hash)))
+  (empty? (get-post-by-audio-hash audio-hash)))
 
 (defn create-post!
   "Creates a new post in the database.
@@ -79,7 +78,7 @@
    ; QUESTION: what is audio's type
    ; what oes checking if audio is null look like? should we check here?
    [audio postid]
-   (let [audio-hash (store-audio! audio)]
+   (let [audio-hash "THIS IS FAKE FOR NOW"]
      (and (post-exists? postid)
             (not (empty? audio))
             (not (post-has-audio? postid))
