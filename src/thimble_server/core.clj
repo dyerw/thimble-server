@@ -26,7 +26,7 @@
 
   ;; TODO: Factor out this auth flow into an auth macro
   (POST "/api/post" request (if-not (authenticated? request) {:status 403}
-                              (let [username (get-in request [:identity :username])
+                              (let [username (get-in request [:identity :user])
                                     replyto   (:replyto request)]
                                 (post/handle-create-post username replyto))))
 
