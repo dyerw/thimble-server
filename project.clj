@@ -12,7 +12,11 @@
                  ;; SQL Libs
                  [yesql "0.4.0"]
                  [org.clojure/java.jdbc "0.3.6"]
-                 [org.xerial/sqlite-jdbc "3.8.7"]]
+                 [org.xerial/sqlite-jdbc "3.8.7"]
+
+                 ;; Auth Libs
+                 [buddy/buddy-auth "0.5.0"]
+                 [buddy/buddy-hashers "0.4.2"]]
 
   :plugins [[lein-cloverage "1.0.2"]]
 

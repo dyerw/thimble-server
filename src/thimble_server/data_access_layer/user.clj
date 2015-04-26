@@ -6,16 +6,23 @@
 (defquery insert-user! "thimble_server/data_access_layer/sql/insert/insert_user.sql")
 (defquery select-user "thimble_server/data_access_layer/sql/select/select_user.sql")
 
-(defn get-user
+;; SQL Database Functions
+
+(defn get-user-info
   "Retrieves user info for a username.
-   Returns a map with :username :password :about"
+   Returns a map with :username :about"
   [username]
-  (first (select-user db-spec username)))
+  (dissoc (first (select-user db-spec username)) :password))
+
+(defn get-user-password
+  "Retrieves the password for a given username."
+  [username]
+  (:password (first (select-user db-spec username))))
 
 (defn user-exists?
   "Returns true if user already exists in database."
   [username]
-  (not (nil? (get-user username))))
+  (not (nil? (get-user-info username))))
 
 (defn create-user!
   "Creates a new user and adds it to the database.
