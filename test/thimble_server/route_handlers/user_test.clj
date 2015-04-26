@@ -20,10 +20,10 @@
   (merge blank-response {:body {:username "user" :password "pass"}}))
 
 (deftest get-existing-user
-  (with-redefs [user-data/get-user (fn [& _] {:username "user"
+  (with-redefs [user-data/get-user-info (fn [& _] {:username "user"
                                               :password "pass"})]
     (is (= (handle-get-user-info "user") expected-response))))
 
 (deftest get-nonexisting-user
-  (with-redefs [user-data/get-user (fn [& _] nil)]
+  (with-redefs [user-data/get-user-info (fn [& _] nil)]
     (is (= (handle-get-user-info "user") {:status 404}))))

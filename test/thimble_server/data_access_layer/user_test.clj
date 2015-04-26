@@ -22,9 +22,9 @@
     (is (not (create-user! "user1" "pass1")))))
 
 (deftest test-user-exists?-with-no-user
-  (with-redefs [get-user (fn [& _] nil)]
+  (with-redefs [get-user-info (fn [& _] nil)]
     (is (not (user-exists? "user1")))))
 
 (deftest test-user-exists?-with-user
-  (with-redefs [get-user (fn [& _] {:username "user" :password "pass"})]
+  (with-redefs [get-user-info (fn [& _] {:username "user" :password "pass"})]
     (is (user-exists? "user1"))))
