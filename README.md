@@ -28,8 +28,8 @@ Using Neo4j to model followers/post replies.
 
 ## Todo
 
-- [ ] Create a macro to add auth logic to routes
-- [ ] Probably move routes out of core.clj
+- [x] Create ~~a macro~~ middleware to add auth logic to routes
+- [x] Probably move routes out of core.clj
 - [ ] Create interface to Neo4j database to express relations between data
 - [ ] Add file upload functionality and hook into S3
 

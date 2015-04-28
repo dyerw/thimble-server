@@ -7,7 +7,7 @@
                  [ring/ring-core "1.3.2"]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [ring/ring-json "0.3.1"]
-                 [compojure "1.3.3"]
+                 [gate "0.0.18"]
 
                  ;; SQL Libs
                  [yesql "0.4.0"]
@@ -21,6 +21,8 @@
             ;; Code Quality tools
   :plugins [[lein-cloverage "1.0.2"]
             [jonase/eastwood "0.2.1"]]
+
+  :eastwood {:exclude-linters [:constant-test]}
 
   :main ^:skip-aot thimble-server.core
   :target-path "target/%s"

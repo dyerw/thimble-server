@@ -9,8 +9,8 @@
 
 (deftest successful-post-creation
   (with-redefs [post-data/create-post! (fn [& _] 666)]
-    (is (= expected-response (handle-create-post "user" 345)))))
+    (is (= expected-response (handle-create-post {:user "user1"})))))
 
 (deftest failed-post-creation
   (with-redefs [post-data/create-post! (fn [& _] nil)]
-    (is (= {:status 400} (handle-create-post "user" 345)))))
+    (is (= {:status 400} (handle-create-post {:user "user" :replyto 324})))))
