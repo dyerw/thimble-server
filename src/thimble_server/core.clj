@@ -2,6 +2,7 @@
             ;; Ring namespaces
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.json :as ring-json]
+            [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [ring.util.response :refer [response]]
 
             ;; Gate Routing Lib
@@ -27,6 +28,7 @@
 
 (def app (-> approuter
              (wrap-authentication auth-backend)
+             wrap-multipart-params
              ring-json/wrap-json-params
              ring-json/wrap-json-response))
 

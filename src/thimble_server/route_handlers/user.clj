@@ -33,13 +33,12 @@
    [username password]
    (if (hashers/check password (user-data/get-user-password username))
      ;; TODO: Get the real secret from config file
-     (response {:token (jws/sign {:user username} "secret" {:alg :hs512})})
+     (response {:token (jws/sign {:authuser username} "secret" {:alg :hs512})})
      {:status 401}))
 
 ;; Route Mapping
 (def routes {:path "/user/:username"
              :get  handle-get-user-info
              :children [ {:path "/:password"
-                          :post handle-create-user}
-                         {:path "/auth/:username/:password"
+                          :post handle-create-user
                           :get  handle-authenticate-user}]})
