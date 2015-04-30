@@ -7,7 +7,7 @@
                  [ring/ring-core "1.3.2"]
                  [ring/ring-jetty-adapter "1.3.2"]
                  [ring/ring-json "0.3.1"]
-                 [gate "0.0.18"]
+                 [gate "0.0.19"]
 
                  ;; SQL Libs
                  [yesql "0.4.0"]

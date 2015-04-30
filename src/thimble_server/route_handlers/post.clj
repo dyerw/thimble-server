@@ -7,11 +7,12 @@
             [thimble-server.route-handlers.authentication :refer [requires-authentication]]))
 
 (defhandler handle-create-post
-  ;"Creates a new post.
-  ;@param username [string] the user creating this post
-  ;@param replyto  [int]    the post id if this is a reply, otherwise nil
-  ;@returns 400 error if we can't create the post or map containing the id
-  ;         assigned to this post"
+  "Creates a new post. Adding new data to the database and scheduling a job
+   to upload the new file to S3.
+   @param authuser [string] the user parsed from the authentication token
+   @param multipart-params [hash-map] contains a userid if this is a reply
+                                      and a reference to the file object
+   @return status code depending on success/failure"
   [authuser multipart-params]
   (if-let [new-postid  (post-data/create-post! authuser
                                                (nil? (:replyto multipart-params)))]
