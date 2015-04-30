@@ -18,6 +18,12 @@
                  [buddy/buddy-auth "0.5.0"]
                  [buddy/buddy-hashers "0.4.2"]]
 
+                 ;; Environment Access
+                 [environ "1.0.0"]
+
+                 ;; Messaging
+                 [com.novemberain/langohr "3.0.1"]
+
             ;; Code Quality tools
   :plugins [[lein-cloverage "1.0.2"]
             [jonase/eastwood "0.2.1"]]

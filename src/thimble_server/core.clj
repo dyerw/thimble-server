@@ -12,7 +12,8 @@
             [buddy.auth :refer [authenticated?]]
             [buddy.auth.backends.token :refer [jws-backend]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
-            [thimble-server.route-handlers.authentication :refer [secret]]
+
+            [environ.core :refer [env]]]
 
             ;; Route handler namespaces
             [thimble-server.route-handlers.user :as user]
@@ -23,7 +24,7 @@
                        :children [post/routes user/routes]}])
 
 ;; Create and wrap all wrappers that are on all routes
-(def auth-backend (jws-backend {:secret secret
+(def auth-backend (jws-backend {:secret (env :tokensecret)
                                :options {:alg :hs512}}))
 
 (def app (-> approuter

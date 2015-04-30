@@ -1,8 +1,6 @@
 (ns thimble-server.route-handlers.authentication
   (:require [buddy.auth :refer [authenticated?]]))
 
-(def secret "secret")
-
 (defn requires-authentication
   "Ring middleware that wraps a handler in functionality to check if
    a request is authenticated and returns a 403 if it's not. Also adds

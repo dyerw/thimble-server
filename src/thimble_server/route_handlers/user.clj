@@ -2,6 +2,7 @@
   (:require [ring.util.response :refer [response]]
             [buddy.hashers :as hashers]
             [buddy.sign.jws :as jws]
+            [environ.core :refer [env]]
             [gate :refer [defhandler]]
             [thimble-server.data-access-layer.user :as user-data]))
 
@@ -33,7 +34,9 @@
    [username password]
    (if (hashers/check password (user-data/get-user-password username))
      ;; TODO: Get the real secret from config file
-     (response {:token (jws/sign {:authuser username} "secret" {:alg :hs512})})
+     (response {:token (jws/sign {:authuser username}
+                                 (env :tokensecret)
+                                 {:alg :hs512})})
      {:status 401}))
 
 ;; Route Mapping
