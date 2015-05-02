@@ -2,6 +2,7 @@
   :description "API for Thimble Mobile App"
 
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/data.json "0.2.6"]
 
                  ;; Web Libs
                  [ring/ring-core "1.3.2"]
@@ -16,13 +17,13 @@
 
                  ;; Auth Libs
                  [buddy/buddy-auth "0.5.0"]
-                 [buddy/buddy-hashers "0.4.2"]]
+                 [buddy/buddy-hashers "0.4.2"]
 
                  ;; Environment Access
                  [environ "1.0.0"]
 
                  ;; Messaging
-                 [com.novemberain/langohr "3.0.1"]
+                 [com.novemberain/langohr "3.0.1"]]
 
             ;; Code Quality tools
   :plugins [[lein-cloverage "1.0.2"]

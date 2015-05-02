@@ -32,12 +32,14 @@
    the one in the data base.
    @returns signed token if successful, auth error if not"
    [username password]
-   (if (hashers/check password (user-data/get-user-password username))
-     ;; TODO: Get the real secret from config file
-     (response {:token (jws/sign {:authuser username}
-                                 (env :tokensecret)
-                                 {:alg :hs512})})
-     {:status 401}))
+   ;; TODO: Test case where user does not exist
+   (let [hash-password (user-data/get-user-password username)]
+   (if (and hash-password
+            (hashers/check password (user-data/get-user-password username)))
+       (response {:token (jws/sign {:authuser username}
+                                   (env :tokensecret)
+                                   {:alg :hs512})})
+     {:status 401 :body "Unable to authenticate user"})))
 
 ;; Route Mapping
 (def routes {:path "/user/:username"

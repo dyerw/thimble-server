@@ -16,7 +16,7 @@
   [authuser multipart-params]
   (if-let [new-postid  (post-data/create-post! authuser
                                                (nil? (:replyto multipart-params)))]
-    (do (jobs/store-file! new-postid (:audio multipart-params))
+    (do (jobs/store-file! new-postid (:tempfile (:audio multipart-params)))
         {:status 200})
     {:status 400}))
 

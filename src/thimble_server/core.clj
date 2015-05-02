@@ -13,7 +13,7 @@
             [buddy.auth.backends.token :refer [jws-backend]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
 
-            [environ.core :refer [env]]]
+            [environ.core :refer [env]]
 
             ;; Route handler namespaces
             [thimble-server.route-handlers.user :as user]
