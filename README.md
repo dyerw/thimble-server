@@ -4,7 +4,26 @@ Backend server for an app we're making.
 
 ## Usage
 
-Just:
+```
+source thimble-env
+```
+
+```
+$ brew install rabbitmq
+
+add the following to .bashrc, adding rabbitmq-server to path
+PATH=$PATH:/usr/local/sbin
+
+see: https://www.rabbitmq.com/install-homebrew.html
+```
+
+```
+$ rabbitmq-server
+$ rabbitmqctl add_user <username> <password>
+$ rabbitmqctl set_permissions thimble ".*" ".*" ".*"
+(see thimble-env for username and password)
+(see https://www.rabbitmq.com/man/rabbitmqctl.1.man.html)
+```
 
 ```
 lein run
