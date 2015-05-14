@@ -21,8 +21,8 @@ see: https://www.rabbitmq.com/install-homebrew.html
 $ rabbitmq-server
 $ rabbitmqctl add_user <username> <password>
 $ rabbitmqctl set_permissions thimble ".*" ".*" ".*"
-(see thimble-env for username and password)
-(see https://www.rabbitmq.com/man/rabbitmqctl.1.man.html)
+see: thimble-env for username and password
+see: https://www.rabbitmq.com/man/rabbitmqctl.1.man.html
 ```
 
 ```
